@@ -1,11 +1,36 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-
+from rango.models import Category, Page
 
 def index(request):
-    context_dict = {'boldmessage': 'Crunchy, creamy, cookie, candy, cupcake!'}
+    # select for top 5 record, put them into context_dict which is used in .html
+    category_list = Category.objects.order_by('-likes')[:5]
+    page_list = Page.objects.order_by('-views')[:5]
+    context_dict = {}
+    context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
+    context_dict['categories'] = category_list
+    context_dict['pages'] = page_list
     return render(request, 'rango/index.html', context=context_dict)
+
 
 def about(request):
     context_dict = {'yourname': 'Kevin'}
     return render(request, 'rango/about.html', context=context_dict)
+
+
+def show_category(request, category_name_slug):
+    context_dict={}
+    try:
+        # Try to find a category name slug with the given name
+        category = Category.objects.get(slug=category_name_slug)
+        # Try to find a page with given category
+        pages = Page.objects.filter(category=category)
+        # Adds our results list to the template context under name pages.
+        context_dict['pages'] = pages
+        # We also add the category object from
+        context_dict['category'] = category
+    except Category.DoesNotExist:
+        # can't find exact category or pages
+        context_dict['category'] = None
+        context_dict['pages'] = None
+    return render(request, 'rango/category.html', context=context_dict)
