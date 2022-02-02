@@ -20,6 +20,8 @@ MEDIA_ROOT = MEDIA_DIR
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
+LOGIN_URL='rango:login'
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '-rpnk46yo#vu+x$w)6aqzr%1-t=7%ewegru57c#1&st(9q=$xl'
 
@@ -81,15 +83,22 @@ DATABASES = {
     }
 }
 
+
+# 密码加密方式 encryption methods, use PBKDF2PasswordHasher by default
+# PASSWORD_HASHERS = (
+#     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+#     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+# )
+
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        # 'OPTIONS': {'min_length':6,} #set minimum length if need
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
