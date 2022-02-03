@@ -29,6 +29,11 @@ SECRET_KEY = '-rpnk46yo#vu+x$w)6aqzr%1-t=7%ewegru57c#1&st(9q=$xl'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+# 关闭浏览器时session过期
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# cookie持续时间为1周
+SESSION_COOKIE_AGE=604800
+
 
 # Application definition
 
